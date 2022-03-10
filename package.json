@@ -1,0 +1,14 @@
+{
+  "name": "js-common-util-z",
+  "version": "1.0.0",
+  "description": "js常用工具",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "js"
+  ],
+  "author": "zhb",
+  "license": "ISC"
+}
