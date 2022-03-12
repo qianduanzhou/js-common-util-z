@@ -13,12 +13,24 @@ const config = {
     },
     resolve: {
         extensions: ['.tsx', '.ts', '.js'],
+        alias: {
+            'utils': resolvePath('../src/utils')
+        }
     },
     module: {
         rules: [{
             test: /\.tsx?$/,
             use: 'ts-loader',
             exclude: /node_modules/,
+        }, {
+            test: /\.m?js$/,
+            exclude: /(node_modules|bower_components)/,
+            use: {
+              loader: 'babel-loader',
+              options: {
+                presets: ['@babel/preset-env']
+              }
+            }
         }],
     },
     plugins: [
