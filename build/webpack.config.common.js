@@ -13,6 +13,7 @@ const config = {
     resolve: {
         extensions: ['.tsx', '.ts', '.js'],
         alias: {
+            '@': resolvePath("../src"),
             'utils': resolvePath('../src/utils')
         }
     },
