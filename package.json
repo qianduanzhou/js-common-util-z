@@ -1,6 +1,6 @@
 {
   "name": "common-util-z",
-  "version": "1.0.0",
+  "version": "1.0.4",
   "description": "js常用工具",
   "main": "dist/bundle.js",
   "types": "dist/types/index.d.ts",

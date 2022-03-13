@@ -80,7 +80,7 @@ class MakeDomMove {
         this.orignY = e.offsetY;
     }
     public makeMove() {//移动
-        let { isLazy, waitTime } = this.options
+        let { isLazy, waitTime } = this.options || {}
         this.child.addEventListener('mousedown', this.mousedownEvent.bind(this));
         document.addEventListener('mousemove', isLazy ? throttle(this.mousemoveEvent.bind(this), waitTime || 100 ): this.mousemoveEvent.bind(this));
         document.addEventListener('mouseup', this.mouseupEvent.bind(this));
