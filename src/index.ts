@@ -1,3 +1,4 @@
+import { debounce, throttle } from 'utils/common'
 import { MakeDomMove } from 'utils/index'
 
-export { MakeDomMove }
+export { MakeDomMove, debounce, throttle }

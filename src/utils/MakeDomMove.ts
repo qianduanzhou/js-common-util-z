@@ -1,7 +1,15 @@
+import { throttle } from 'utils/common';
+
 type InType = HTMLElement | Element | string | null
+interface Options {
+    isLazy?: Boolean,//是否节流
+    waitTime?: number//间隔时间
+}
+
 class MakeDomMove {
     public father: HTMLElement;//父元素dom
     public child: HTMLElement;//子元素dom
+    private options: Options;//其他参数，如防抖节流
     private isMousedown: Boolean;//是否按下鼠标
     private orignX: number;//起始x位置
     private orignY: number;//起始y位置
@@ -9,9 +17,10 @@ class MakeDomMove {
     private maxLeft: number;//最大left
     private minTop: number;//最小top
     private maxTop: number;//最大top
-    constructor(father: InType, child: InType) {//父元素及子元素
-        this.father = this.getParam(father);
+    constructor(father: InType, child: InType, options?: Options) {//父元素、子元素、其他参数
+        this.father = father ? this.getParam(father) : document.body;
         this.child = this.getParam(child);
+        this.options = options;
         let fbcr = this.father.getBoundingClientRect();
         let cbcr = this.child.getBoundingClientRect();
         this.minLeft = this.child.offsetLeft - (cbcr.left - fbcr.left);
@@ -40,16 +49,13 @@ class MakeDomMove {
     }
     private mousedownEvent(e: MouseEvent) {
         this.isMousedown = true;
-        this.orignX = e.offsetX;
-        this.orignY = e.offsetY;
-        console.log(getComputedStyle(this.child, null).top)
+        this.orignX = e.clientX - this.child.offsetLeft;
+        this.orignY = e.clientY - this.child.offsetTop;
     }
     private mousemoveEvent(e: MouseEvent) {
         if(this.isMousedown) {
-            let diffX = e.offsetX - this.orignX;
-            let diffY = e.offsetY - this.orignY;
-            let left = this.child.offsetLeft + diffX;
-            let top = this.child.offsetTop + diffY;
+            let left = e.clientX - this.orignX;
+            let top = e.clientY - this.orignY;
             if(left < this.minLeft) {
                 left = this.minLeft;
                 this.isMousedown = false;
@@ -73,10 +79,16 @@ class MakeDomMove {
         this.orignX = e.offsetX;
         this.orignY = e.offsetY;
     }
-    public makeMove() {
+    public makeMove() {//移动
+        let { isLazy, waitTime } = this.options
         this.child.addEventListener('mousedown', this.mousedownEvent.bind(this));
-        this.child.addEventListener('mousemove', this.mousemoveEvent.bind(this));
-        this.child.addEventListener('mouseup', this.mouseupEvent.bind(this));
+        document.addEventListener('mousemove', isLazy ? throttle(this.mousemoveEvent.bind(this), waitTime || 100 ): this.mousemoveEvent.bind(this));
+        document.addEventListener('mouseup', this.mouseupEvent.bind(this));
+    }
+    public clear() {//清除移动
+        this.child.removeEventListener('mousedown', this.mousedownEvent);
+        document.removeEventListener('mousemove', this.mousemoveEvent);
+        document.removeEventListener('mouseup', this.mouseupEvent);
     }
 }
 
