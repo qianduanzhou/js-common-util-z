@@ -1,4 +1,5 @@
 const { merge } = require('webpack-merge');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 const { config: commonfig, resolvePath } = require('./webpack.config.common');
 
 module.exports = merge(commonfig, {
@@ -16,5 +17,11 @@ module.exports = merge(commonfig, {
     module: {
         rules: [],
     },
-    plugins: [],
+    plugins: [
+        new HtmlWebpackPlugin({
+            title: 'js-common-util',
+            filename: 'index.html',
+            template: resolvePath('../test/index.html'),
+        })
+    ],
 });

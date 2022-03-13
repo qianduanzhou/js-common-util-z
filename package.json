@@ -1,15 +1,17 @@
 {
-  "name": "js-common-util-z",
-  "version": "1.0.1",
+  "name": "common-util-z",
+  "version": "1.0.0",
   "description": "js常用工具",
   "main": "dist/bundle.js",
+  "types": "dist/types/index.d.ts",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "webpack serve --config ./build/webpack.config.dev.js",
     "build": "webpack --config ./build/webpack.config.js"
   },
   "keywords": [
-    "js"
+    "javascript",
+    "typescript"
   ],
   "author": "zhb",
   "license": "ISC",
@@ -17,6 +19,7 @@
     "@babel/core": "^7.17.5",
     "@babel/preset-env": "^7.16.11",
     "babel-loader": "^8.2.3",
+    "clean-webpack-plugin": "^4.0.0",
     "html-webpack-plugin": "^5.5.0",
     "ts-loader": "^9.2.7",
     "typescript": "^4.6.2",
