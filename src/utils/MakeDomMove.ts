@@ -21,13 +21,13 @@ class MakeDomMove {
         this.father = father ? this.getParam(father) : document.body;
         this.child = this.getParam(child);
         this.options = options;
+        this.checkStyle();
         let fbcr = this.father.getBoundingClientRect();
         let cbcr = this.child.getBoundingClientRect();
         this.minLeft = this.child.offsetLeft - (cbcr.left - fbcr.left);
         this.maxLeft = (fbcr.left + fbcr.width) - (cbcr.left - this.child.offsetWidth) - cbcr.width;
         this.minTop = this.child.offsetTop - (cbcr.top - fbcr.top);
         this.maxTop = (fbcr.top + fbcr.height) - (cbcr.top - this.child.offsetHeight) - cbcr.height;
-        this.checkStyle();
     }
     private getParam(dom: InType): HTMLElement {//获取dom
         if(typeof dom === 'string') {
@@ -44,8 +44,8 @@ class MakeDomMove {
         }
     }
     private checkStyle() {//检查样式是否符合
-        let position = getComputedStyle(this.child)?.position;
-        if(position !== 'absolute') this.child.style.position = 'absolute';
+        let cPosition = getComputedStyle(this.child)?.position;
+        if(cPosition !== 'absolute') this.child.style.position = 'absolute';
     }
     private mousedownEvent(e: MouseEvent) {
         this.isMousedown = true;
