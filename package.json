@@ -1,6 +1,6 @@
 {
   "name": "zhb-common-utils",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "js常用工具",
   "main": "dist/bundle.js",
   "types": "dist/types/index.d.ts",
