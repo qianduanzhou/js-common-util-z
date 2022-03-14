@@ -25,9 +25,9 @@ class MakeDomMove {
         let fbcr = this.father.getBoundingClientRect();
         let cbcr = this.child.getBoundingClientRect();
         this.minLeft = this.child.offsetLeft - (cbcr.left - fbcr.left);
-        this.maxLeft = (fbcr.left + fbcr.width) - (cbcr.left - this.child.offsetWidth) - cbcr.width;
+        this.maxLeft = (fbcr.left + fbcr.width) - (cbcr.left - this.child.offsetLeft) - cbcr.width;
         this.minTop = this.child.offsetTop - (cbcr.top - fbcr.top);
-        this.maxTop = (fbcr.top + fbcr.height) - (cbcr.top - this.child.offsetHeight) - cbcr.height;
+        this.maxTop = (fbcr.top + fbcr.height) - (cbcr.top - this.child.offsetTop) - cbcr.height;
     }
     private getParam(dom: InType): HTMLElement {//获取dom
         if(typeof dom === 'string') {
@@ -44,8 +44,15 @@ class MakeDomMove {
         }
     }
     private checkStyle() {//检查样式是否符合
-        let cPosition = getComputedStyle(this.child)?.position;
-        if(cPosition !== 'absolute') this.child.style.position = 'absolute';
+        let computedStyle = getComputedStyle(this.child),
+        position = computedStyle.position,
+        marginTop = computedStyle.marginTop,
+        marginLeft = computedStyle.marginLeft
+        console.log('marginTop', marginTop)
+        if(position !== 'absolute') this.child.style.position = 'absolute';
+        if(marginTop !== '0px') this.child.style.left = marginTop;
+        if(marginLeft !== '0px') this.child.style.top = marginLeft;
+        this.child.style.margin = '0px';
     }
     private mousedownEvent(e: MouseEvent) {
         this.isMousedown = true;
