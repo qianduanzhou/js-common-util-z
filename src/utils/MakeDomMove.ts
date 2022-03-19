@@ -45,13 +45,14 @@ class MakeDomMove {
     }
     private checkStyle() {//检查样式是否符合
         let computedStyle = getComputedStyle(this.child),
-        position = computedStyle.position,
-        marginTop = computedStyle.marginTop,
-        marginLeft = computedStyle.marginLeft
-        console.log('marginTop', marginTop)
+        { position, marginTop, marginLeft, top, left} = computedStyle,
+        marginTopNum = replacePxToEmpty(marginTop),
+        marginLeftNum = replacePxToEmpty(marginTop),
+        topNum = replacePxToEmpty(marginTop),
+        leftNum = replacePxToEmpty(marginTop)
         if(position !== 'absolute') this.child.style.position = 'absolute';
-        if(marginTop !== '0px') this.child.style.left = marginTop;
-        if(marginLeft !== '0px') this.child.style.top = marginLeft;
+        if(marginTop !== '0px') this.child.style.left = marginTopNum + topNum + 'px';
+        if(marginLeft !== '0px') this.child.style.top = marginLeftNum + leftNum + 'px';
         this.child.style.margin = '0px';
     }
     private mousedownEvent(e: MouseEvent) {
@@ -101,6 +102,10 @@ class MakeDomMove {
 
 function isObject(data: object | null) {
     return typeof data === 'object' && data !== null;
+}
+
+function replacePxToEmpty(val: string) {
+    return Number(val.replace('px', ''));
 }
 
 export default MakeDomMove;
